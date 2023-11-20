@@ -4,19 +4,6 @@ CREATE DATABASE garageparrotdb;
 -- Utilisation de la base de données
 \c garageparrotdb;
 
--- Création de la table Contacts
-CREATE TABLE contacts (
-    id SERIAL PRIMARY KEY,
-    nom VARCHAR(255) NOT NULL,
-    prenom VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    numero_telephone VARCHAR(20),
-    message TEXT NOT NULL,
-    sujet VARCHAR(255),
-    voiture_id INTEGER,
-    FOREIGN KEY (voiture_id) REFERENCES voituresoccasion(id)
-);
-
 -- Création de la table JourSemaine
 CREATE TABLE jour_semaine (
     id VARCHAR(20) PRIMARY KEY
@@ -54,17 +41,17 @@ CREATE TABLE temoignages (
 
 -- Création de la table Utilisateurs
 CREATE TABLE utilisateurs (
-    id UUID PRIMARY KEY,
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
     firstname VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    roles ARRAY NOT NULL
+    roles VARCHAR(255)[] NOT NULL
 );
 
 -- Création de la table Voituresoccasion
 CREATE TABLE voituresoccasion (
-    id UUID PRIMARY KEY,
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
     marque VARCHAR(255) NOT NULL,
     modele VARCHAR(255) NOT NULL,
     annee_mise_en_circulation INTEGER NOT NULL,
@@ -75,3 +62,15 @@ CREATE TABLE voituresoccasion (
     description TEXT
 );
 
+-- Création de la table Contacts
+CREATE TABLE contacts (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL,
+    prenom VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    numero_telephone VARCHAR(20),
+    message TEXT NOT NULL,
+    sujet VARCHAR(255),
+    voiture_id UUID,
+    FOREIGN KEY (voiture_id) REFERENCES voituresoccasion(id)
+);

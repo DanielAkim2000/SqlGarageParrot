@@ -4,6 +4,8 @@ CREATE DATABASE garageparrotdb;
 -- Utilisation de la base de données
 \c garageparrotdb;
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Création de la table JourSemaine
 CREATE TABLE jour_semaine (
     id VARCHAR(20) PRIMARY KEY
